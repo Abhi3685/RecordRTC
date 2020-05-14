@@ -5160,6 +5160,26 @@ function MultiStreamsMixer(arrayOfMediaStreams, elementClass) {
         if (typeof video.stream.height !== 'undefined') {
             height = video.stream.height;
         }
+        
+        function roundedImage(x,y,width,height,radius){
+            context.beginPath();
+            context.moveTo(x + radius, y);
+            context.lineTo(x + width - radius, y);
+            context.quadraticCurveTo(x + width, y, x + width, y + radius);
+            context.lineTo(x + width, y + height - radius);
+            context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            context.lineTo(x + radius, y + height);
+            context.quadraticCurveTo(x, y + height, x, y + height - radius);
+            context.lineTo(x, y + radius);
+            context.quadraticCurveTo(x, y, x + radius, y);
+            context.closePath();
+        }
+
+        if(idx == 0){
+            var radius = width * 0.51;
+            roundedImage(x, y, width, height, radius);
+            context.clip();
+        }
 
         context.drawImage(video, x, y, width, height);
 
